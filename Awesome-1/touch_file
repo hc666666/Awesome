@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# 检查/var/log下是否存在netmonitor文件夹，如果不存在则创建
+if [ ! -d "/var/log/netmonitor" ]; then
+    mkdir -p /var/log/netmonitor
+    if [ $? -ne 0 ]; then
+        echo "创建netmonitor文件夹失败"
+        exit 1
+    fi
+fi
+
+# 检查/var/log/netmonitor下是否存在temp.log文件
+if [ -f "/var/log/netmonitor/temp.log" ]; then
+    echo ""  > /var/log/netmonitor/temp.log
+    if [ $? -ne 0 ]; then
+        echo "清空temp.log文件失败"
+        exit 1
+    fi
+else
+    touch /var/log/netmonitor/temp.log
+    if [ $? -ne 0 ]; then
+        echo "创建temp.log文件失败"
+        exit 1
+    fi
+fi
+
+echo "操作成功完成"
